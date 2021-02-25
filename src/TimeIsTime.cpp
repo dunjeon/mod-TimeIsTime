@@ -64,4 +64,3 @@ void AddTimeIsTimeScripts() {
     new TimeIsTimeAnnounce();
     new TimeIsTime();
 }
-

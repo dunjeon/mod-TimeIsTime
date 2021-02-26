@@ -1,4 +1,4 @@
-# mod_TimeIsTime
+# mod-TimeIsTime
 TimeIsTime is a module for Azerothcore to adjust the day/night cycle speed in World of Warcraft 3.3.5a
 
 # Settings

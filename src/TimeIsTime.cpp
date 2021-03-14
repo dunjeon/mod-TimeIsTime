@@ -28,23 +28,16 @@ public:
     }
 };
 
-class TimeIsTimeAnnounce : public PlayerScript
-{
-public:
-
-    TimeIsTimeAnnounce() : PlayerScript("TimeIsTimeAnnounce") {}
-
-    void OnLogin(Player* player) {
-        if (timeistime_enable && timeistime_announce)
-            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |cffFFFF00module.");
-    }
-};
-
 class TimeIsTime : public PlayerScript {
 public:
 
     TimeIsTime() : PlayerScript("TimeIsTime") { }
 
+    void OnLogin(Player* player) {
+        if (timeistime_enable && timeistime_announce)
+            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |cffFFFF00module.");
+    }
+	
     void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
         if (timeistime_enable) {
             speedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * timeistime_speed_rate));
@@ -61,6 +54,5 @@ public:
 
 void AddTimeIsTimeScripts() {
     new TimeIsTimeBeforeConfigLoad();
-    new TimeIsTimeAnnounce();
     new TimeIsTime();
 }

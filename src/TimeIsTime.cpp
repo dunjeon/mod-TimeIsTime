@@ -11,10 +11,10 @@
 #include "Config.h"
 #include "Chat.h"
 
-static bool   timeistime_enable{},
-              timeistime_announce{};
-static float  timeistime_speed_rate{};
-static uint32 speedtime{};
+static bool   stimeistime_enable{},
+              stimeistime_announce{};
+static float  stimeistime_speed_rate{};
+static uint32 sspeedtime{};
 
 class TimeIsTimeBeforeConfigLoad : public WorldScript {
 public:
@@ -22,9 +22,9 @@ public:
     TimeIsTimeBeforeConfigLoad() : WorldScript("TimeIsTimeBeforeConfigLoad") { }
 
     void OnBeforeConfigLoad(bool /*reload*/) override {
-        timeistime_enable = sConfigMgr->GetBoolDefault("TimeIsTime.Enable", true);
-        timeistime_announce = sConfigMgr->GetBoolDefault("TimeIsTime.Announce", true);
-        timeistime_speed_rate = sConfigMgr->GetFloatDefault("TimeIsTime.SpeedRate", 1.0);
+        stimeistime_enable = sConfigMgr->GetBoolDefault("TimeIsTime.Enable", true);
+        stimeistime_announce = sConfigMgr->GetBoolDefault("TimeIsTime.Announce", true);
+        stimeistime_speed_rate = sConfigMgr->GetFloatDefault("TimeIsTime.SpeedRate", 1.0);
     }
 };
 
@@ -34,17 +34,17 @@ public:
     TimeIsTime() : PlayerScript("TimeIsTime") { }
 
     void OnLogin(Player* player) {
-        if (timeistime_enable && timeistime_announce)
+        if (stimeistime_enable && stimeistime_announce)
             ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |cffFFFF00module.");
     }
 	
     void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
-        if (timeistime_enable) {
-            speedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * timeistime_speed_rate));
+        if (stimeistime_enable) {
+            sspeedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
 
             data.Initialize(SMSG_LOGIN_SETTIMESPEED, 4 + 4 + 4);
-            data.AppendPackedTime(timeistime_speed_rate);
-            data << float(0.01666667f) * timeistime_speed_rate;
+            data.AppendPackedTime(stimeistime_speed_rate);
+            data << float(0.01666667f) * stimeistime_speed_rate;
             data << uint32(0);
 
             player->GetSession()->SendPacket(&data);

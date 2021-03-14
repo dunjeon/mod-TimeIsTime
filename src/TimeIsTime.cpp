@@ -11,9 +11,10 @@
 #include "Config.h"
 #include "Chat.h"
 
-static bool timeistime_enable{};
-static bool timeistime_announce{};
-static float timeistime_speed_rate{};
+static bool   timeistime_enable{},
+              timeistime_announce{};
+static float  timeistime_speed_rate{};
+static uint32 speedtime{};
 
 class TimeIsTimeBeforeConfigLoad : public WorldScript {
 public:
@@ -34,9 +35,8 @@ public:
     TimeIsTimeAnnounce() : PlayerScript("TimeIsTimeAnnounce") {}
 
     void OnLogin(Player* player) {
-        // Announce Module
         if (timeistime_enable && timeistime_announce)
-            ChatHandler(player->GetSession()).SendSysMessage("Server is running |cff4CFF00TimeIsTime |cffFFFF00 rmodule.");
+            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |cffFFFF00module.");
     }
 };
 
@@ -47,7 +47,7 @@ public:
 
     void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
         if (timeistime_enable) {
-            uint32 speedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * timeistime_speed_rate));
+            speedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * timeistime_speed_rate));
 
             data.Initialize(SMSG_LOGIN_SETTIMESPEED, 4 + 4 + 4);
             data.AppendPackedTime(timeistime_speed_rate);

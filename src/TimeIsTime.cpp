@@ -13,7 +13,6 @@
 
 static bool   stimeistime_enable,
               stimeistime_announce;
-static uint32 sspeedtime;
 static float  stimeistime_speed_rate;
 
 class TimeIsTimeBeforeConfigLoad : public WorldScript {
@@ -42,10 +41,10 @@ public:
         if (!stimeistime_enable)
             return;
 
-        sspeedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
+        uint32 speed_time = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
 
         data.Initialize(SMSG_LOGIN_SETTIMESPEED, 4 + 4 + 4);
-        data.AppendPackedTime(sspeedtime);
+        data.AppendPackedTime(speed_time);
         data << float(0.01666667f) * stimeistime_speed_rate;
         data << uint32(0);
 

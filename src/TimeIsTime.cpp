@@ -11,10 +11,10 @@
 #include "Config.h"
 #include "Chat.h"
 
-static bool   stimeistime_enable{},
-              stimeistime_announce{};
-static float  stimeistime_speed_rate{};
-static uint32 sspeedtime{};
+static bool   stimeistime_enable,
+              stimeistime_announce;
+static uint32 sspeedtime;
+static float  stimeistime_speed_rate;
 
 class TimeIsTimeBeforeConfigLoad : public WorldScript {
 public:
@@ -35,20 +35,21 @@ public:
 
     void OnLogin(Player* player) {
         if (stimeistime_enable && stimeistime_announce)
-            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |cffFFFF00module.");
+            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |rmodule");
     }
 	
     void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
-        if (stimeistime_enable) {
-            sspeedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
+        if (!stimeistime_enable)
+            return;
 
-            data.Initialize(SMSG_LOGIN_SETTIMESPEED, 4 + 4 + 4);
-            data.AppendPackedTime(stimeistime_speed_rate);
-            data << float(0.01666667f) * stimeistime_speed_rate;
-            data << uint32(0);
+        sspeedtime = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
 
-            player->GetSession()->SendPacket(&data);
-        }
+        data.Initialize(SMSG_LOGIN_SETTIMESPEED, 4 + 4 + 4);
+        data.AppendPackedTime(sspeedtime);
+        data << float(0.01666667f) * stimeistime_speed_rate;
+        data << uint32(0);
+
+        player->GetSession()->SendPacket(&data);
     }
 };
 

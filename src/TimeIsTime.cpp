@@ -1,6 +1,6 @@
 /*
  * Azerothcore Module:     TimeIsTime
- * Author:                 Dunjeon
+ * Author:                 Dunjeon www.guilded.gg/solofriendly
  * Contributing Author(s): lasyan3, vratam @ RegWorks
  * Version:                20210225
  * License:                GNU Affero General Public License v3.0.

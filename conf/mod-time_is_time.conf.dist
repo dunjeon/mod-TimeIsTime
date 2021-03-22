@@ -23,7 +23,7 @@ TimeIsTime.Announce = 1
 # Default:  1
 # Example:  TimeIsTime.Enable = 1 
 #####################################################################################################
-TimeIsTime.Enable = 1 
+TimeIsTime.Enable = 1
 
 # SpeedRate
 #####################################################################################################
@@ -41,3 +41,20 @@ TimeIsTime.Enable = 1
 # Example:  TimeIsTime.SpeedRate = 1.0
 #####################################################################################################
 TimeIsTime.SpeedRate = 1.0
+
+# TimeStart and HourOffset:
+#####################################################################################################
+# Start (client side) game clock at chosen Epoch (Unix) time at the same time each login
+# Default:  0  (Local Time)
+# Example:  Based on the settings below, the GMT TimeStart and HourOffset would be:
+#           TimeIsTime.TimeStart = 205364700
+#           TimeIsTime.HourOffset = 5
+#           City: Chicago, IL USA
+#           Summer Solstice Date   :: 06-20-2008
+#           Sunrise  = 05:15:27    :: 1213938927
+#           Sunset   = 20:29:01    :: 1213993741
+#           Midday   = 12:00:00    :: 1213963200
+#           Midnight = 24:00:00    :: 1213920000
+#####################################################################################################
+TimeIsTime.TimeStart = 0
+TimeIsTime.HourOffset = 0

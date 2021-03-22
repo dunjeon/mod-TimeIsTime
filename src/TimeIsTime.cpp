@@ -13,7 +13,9 @@
 
 static bool   stimeistime_enable,
               stimeistime_announce;
-static float  stimeistime_speed_rate;
+static float  stimeistime_speed_rate,
+              stimeistime_hour_offset;
+static uint32 stimeistime_time_start;
 
 class TimeIsTimeBeforeConfigLoad : public WorldScript {
 public:
@@ -24,6 +26,8 @@ public:
         stimeistime_enable = sConfigMgr->GetBoolDefault("TimeIsTime.Enable", true);
         stimeistime_announce = sConfigMgr->GetBoolDefault("TimeIsTime.Announce", true);
         stimeistime_speed_rate = sConfigMgr->GetFloatDefault("TimeIsTime.SpeedRate", 1.0);
+        stimeistime_hour_offset = sConfigMgr->GetFloatDefault("TimeIsTime.HourOffset", 1.0);
+        stimeistime_time_start = sConfigMgr->GetIntDefault("TimeIsTime.TimeStart", 1.0);
     }
 };
 
@@ -41,10 +45,17 @@ public:
         if (!stimeistime_enable)
             return;
 
-        uint32 speed_time = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
+        uint32 speed_time  = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
+        float  hour_offset = stimeistime_hour_offset  * 3600;
+        uint32 time_start  = stimeistime_time_start + hour_offset;
 
         data.Initialize(SMSG_LOGIN_SETTIMESPEED, 4 + 4 + 4);
-        data.AppendPackedTime(speed_time);
+        if (stimeistime_time_start > 0) {
+            data.AppendPackedTime(time_start);
+        }
+        else {
+            data.AppendPackedTime(speed_time);
+        }
         data << float(0.01666667f) * stimeistime_speed_rate;
         data << uint32(0);
 

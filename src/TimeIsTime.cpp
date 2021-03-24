@@ -26,8 +26,8 @@ public:
         stimeistime_enable = sConfigMgr->GetBoolDefault("TimeIsTime.Enable", true);
         stimeistime_announce = sConfigMgr->GetBoolDefault("TimeIsTime.Announce", true);
         stimeistime_speed_rate = sConfigMgr->GetFloatDefault("TimeIsTime.SpeedRate", 1.0);
-        stimeistime_hour_offset = sConfigMgr->GetFloatDefault("TimeIsTime.HourOffset", 1.0);
-        stimeistime_time_start = sConfigMgr->GetIntDefault("TimeIsTime.TimeStart", 1.0);
+        stimeistime_hour_offset = sConfigMgr->GetFloatDefault("TimeIsTime.HourOffset", 0.0);
+        stimeistime_time_start = sConfigMgr->GetIntDefault("TimeIsTime.TimeStart", 0);
     }
 };
 

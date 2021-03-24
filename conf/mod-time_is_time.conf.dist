@@ -57,4 +57,4 @@ TimeIsTime.SpeedRate = 1.0
 #           Midnight = 24:00:00    :: 1213920000
 #####################################################################################################
 TimeIsTime.TimeStart = 0
-TimeIsTime.HourOffset = 0
+TimeIsTime.HourOffset = 0.0

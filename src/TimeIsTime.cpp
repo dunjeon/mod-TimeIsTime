@@ -2,7 +2,7 @@
  * Azerothcore Module:     TimeIsTime
  * Author:                 Dunjeon www.guilded.gg/solofriendly
  * Contributing Author(s): lasyan3, vratam @ RegWorks
- * Version:                20210225
+ * Version:                20220128
  * License:                GNU Affero General Public License v3.0.
  */
 
@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Config.h"
 #include "Chat.h"
+#include "GameTime.h"
 
 static bool   stimeistime_enable,
               stimeistime_announce;
@@ -45,7 +46,7 @@ public:
         if (!stimeistime_enable)
             return;
 
-        uint32 speed_time  = ((sWorld->GetGameTime() - sWorld->GetUptime()) + (sWorld->GetUptime() * stimeistime_speed_rate));
+        uint32 speed_time  = (GameTime::GetGameTime().count() - GameTime::GetUptime().count()) + (GameTime::GetUptime().count() * stimeistime_speed_rate);
         float  hour_offset = stimeistime_hour_offset  * 3600;
         uint32 time_start  = stimeistime_time_start + hour_offset;
 

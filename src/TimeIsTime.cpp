@@ -37,12 +37,12 @@ public:
 
     TimeIsTime() : PlayerScript("TimeIsTime") { }
 
-    void OnLogin(Player* player) {
+    void OnPlayerLogin(Player* player) {
         if (stimeistime_enable && stimeistime_announce)
             ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |rmodule");
     }
 	
-    void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
+    void OnPlayerSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
         if (!stimeistime_enable)
             return;
 

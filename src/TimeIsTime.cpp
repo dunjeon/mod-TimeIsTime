@@ -24,11 +24,11 @@ public:
     TimeIsTimeBeforeConfigLoad() : WorldScript("TimeIsTimeBeforeConfigLoad") { }
 
     void OnBeforeConfigLoad(bool /*reload*/) override {
-        stimeistime_enable = sConfigMgr->GetBoolDefault("TimeIsTime.Enable", true);
-        stimeistime_announce = sConfigMgr->GetBoolDefault("TimeIsTime.Announce", true);
-        stimeistime_speed_rate = sConfigMgr->GetFloatDefault("TimeIsTime.SpeedRate", 1.0);
-        stimeistime_hour_offset = sConfigMgr->GetFloatDefault("TimeIsTime.HourOffset", 0.0);
-        stimeistime_time_start = sConfigMgr->GetIntDefault("TimeIsTime.TimeStart", 0);
+        stimeistime_enable = sConfigMgr->GetOption<bool>("TimeIsTime.Enable", true);
+        stimeistime_announce = sConfigMgr->GetOption<bool>("TimeIsTime.Announce", true);
+        stimeistime_speed_rate = sConfigMgr->GetOption<float>("TimeIsTime.SpeedRate", 1.0);
+        stimeistime_hour_offset = sConfigMgr->GetOption<float>("TimeIsTime.HourOffset", 0.0);
+        stimeistime_time_start = sConfigMgr->GetOption<int>("TimeIsTime.TimeStart", 0);
     }
 };
 
@@ -37,12 +37,12 @@ public:
 
     TimeIsTime() : PlayerScript("TimeIsTime") { }
 
-    void OnLogin(Player* player) {
+    void OnPlayerLogin(Player* player) {
         if (stimeistime_enable && stimeistime_announce)
             ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |rmodule");
     }
 	
-    void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
+    void OnPlayerSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
         if (!stimeistime_enable)
             return;
 
